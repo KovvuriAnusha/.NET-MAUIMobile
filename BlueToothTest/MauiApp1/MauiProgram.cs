@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MauiApp1.Services;
+using MauiApp1.Services.Interfaces;
+using MauiApp1.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace MauiApp1
 {
@@ -14,10 +17,13 @@ namespace MauiApp1
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            // Register Services (DI)
+            builder.Services.AddSingleton<IBluetoothService, BluetoothService>();
+            builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+            // Register ViewModel and Page
+            builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<MainPage>();
 
             return builder.Build();
         }
